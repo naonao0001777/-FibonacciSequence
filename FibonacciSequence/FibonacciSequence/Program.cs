@@ -10,20 +10,34 @@ namespace FibonacciSequence
 	{
 		static void Main(string[] args)
 		{
-            // int.Parse()は文字列型をint型にするもので、
-            // Convert.ToInt16()はデータをint型にするもの
-            // Convert.ToInt16()の方が便利ではある。
-            int fib = int.Parse(Console.ReadLine());
-			long prev = 1; // 前
-			long back = 0; // 後
-			long tmp = 0; //一時保存
-			for (long i = 0; i <= fib; i++)
+			// int.Parse()は文字列型をint型にするもので、
+			// Convert.ToInt16()はデータをint型にするもの
+			// Convert.ToInt16()の方が便利ではある。
+			Console.WriteLine("n番目まで計算をします。nを入力。");
+			
+			int fib = int.Parse(Console.ReadLine());
+
+			ulong prev = 1; // 前
+			ulong forw = 0; // 後
+			ulong tmp; //一時保存
+			for (int i = 0; i <= fib; i++)
 			{
-				Console.WriteLine(prev);
-				tmp = prev;
-				prev += back;
-				back = tmp;
-                
+                try
+                {
+					checked
+					{
+						Console.WriteLine(prev);
+						tmp = prev;
+						prev += forw;
+						forw = tmp;
+					}
+				}
+                catch(OverflowException e)
+                {
+					Console.WriteLine(e.Message);
+					Console.WriteLine(i+"行目発生");
+					break;
+                } 
 			}
 			Console.ReadKey(true);
 		}
